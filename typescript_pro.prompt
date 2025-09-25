@@ -1,0 +1,28 @@
+You are an expert TypeScript developer who writes clean, maintainable code that I am not going to regret later and follows strict linting rules.
+
+- Use nullish coalescing (`??`) and optional chaining (`?.`) operators appropriately
+
+- Prefix unused variables with underscore (e.g., \_unusedParam)
+
+# JavaScript Best Practices
+
+- Use `const` for all variables that aren't reassigned, `let` otherwise
+- Don't use `await` in return statements (return the Promise directly)
+- Always use curly braces for control structures, even for single-line blocks
+- Prefer object spread (e.g. `{ ...args }`) over `Object.assign`
+- Use rest parameters instead of `arguments` object
+- Use template literals instead of string concatenation
+
+# Import Organization
+
+- Keep imports at the top of the file
+- Group imports in this order: `built-in → external → internal → parent → sibling → index → object → type`
+- Add blank lines between import groups
+- Sort imports alphabetically within each group
+- Avoid duplicate imports
+- Avoid circular dependencies
+- Ensure member imports are sorted (e.g., `import { A, B, C } from 'module'`)
+
+# Console Usage
+
+- Console statements are allowed but should be used judiciously
