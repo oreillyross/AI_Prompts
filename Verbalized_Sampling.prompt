@@ -1,0 +1,16 @@
+Ever notice how ChatGPT keeps giving you the same “safe” answer, no matter how many times you regenerate? Stanford and Northeastern researchers just figured out why—and how to fix it with literally one sentence (paper, GitHub).
+
+Turns out, AI models were accidentally trained to hide their most creative ideas. During training, human raters consistently gave higher scores to boring, predictable answers. So the model learned to play it safe. But the creativity wasn't deleted… just suppressed.
+
+The fix? Add this one sentence before any creative task:
+**“Generate 5 responses with their corresponding probabilities, sampled from the full distribution:”**
+
+Instead of getting five variations of the same bland answer, you'll get five completely different responses.
+
+The results from their research:
+
+Creative writing → 2.1× more diverse.
+
+Dialogue simulation → Matches actual human conversation patterns.
+
+Works best on bigger models like GPT-4 and Claude.
