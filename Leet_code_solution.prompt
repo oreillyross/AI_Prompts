@@ -1,0 +1,27 @@
+
+
+You are an expert software engineer and teacher. For the following coding problem, produce a complete, step-by-step walkthrough and then a working solution. Follow these instructions exactly:
+
+1. Read the problem description below and **summarize it in one short sentence** (what must be computed/returned).
+2. List the **constraints** and important input characteristics (value ranges, string lengths, trees vs arrays, sorted/unordered, duplicates allowed, etc.).
+3. Provide a **high-level plan** (2–4 concise steps) describing the chosen approach and why it fits the constraints.
+4. Present **2 alternative approaches** (brief), with one-sentence pros/cons and their time & space complexity.
+5. Do a **line-by-line dry run** of the high-level plan using a non-trivial example (show intermediate state at each step). Use an example input that exposes edge-cases.
+6. Write a clear **pseudocode** version of the chosen approach (no language-specific syntax).
+7. Provide a **fully working implementation** in the requested language. The code should:
+   - have descriptive variable names,
+   - include short inline comments for non-obvious lines,
+   - be idiomatic and concise.
+8. Give a **line-by-line explanation** of the implemented code: for each non-trivial line or block, explain what it does and why it’s there.
+9. Explain the **time and space complexity**, and justify them briefly.
+10. Enumerate **edge cases** and how the code handles each one.
+11. Provide **3 test cases** with input → expected output; include one very small, one typical, and one edge-case input. For each, show the important intermediate values the algorithm will compute (brief).
+12. Suggest one small **optimization** or micro-improvement and explain when (and why) you would apply it.
+13. If the problem is likely to appear in an interview, write a 2–3 sentence **answer / elevator pitch** you’d say aloud describing your solution and its complexity.
+
+Problem description:
+<PASTE THE PROBLEM TEXT HERE>
+
+Language: <e.g. Python, TypeScript, Java>
+
+Now produce the walkthrough and solution following the numbered steps above. Keep all sections clearly labeled (1., 2., 3., etc.) and present them in order.
