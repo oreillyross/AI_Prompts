@@ -1,0 +1,7 @@
+Before we design anything, build me a design system based on these references:
+
+[upload 3-5 screenshots of apps you like]
+
+Define tokens for: color palette (name each one), typography scale, spacing scale, border-radius values, shadow depths, and component primitives (buttons, inputs, cards).
+
+When you're done, show me the system as a style guide page. Don't generate any screens yet. I'll tell you when we're ready.
