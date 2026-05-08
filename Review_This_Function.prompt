@@ -1,0 +1,10 @@
+Review this function against the following checklist:
+
+1. Type hints on all parameters and return value
+2. Docstring with description, parameters, returns, and raises
+3. Specific exception handling (no bare except)
+4. Input validation on all parameters
+5. No hardcoded values
+
+For each item, respond with PASS or FAIL and a one-line explanation.
+If FAIL, provide the corrected code for that specific issue only.
