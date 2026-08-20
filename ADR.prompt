@@ -1,0 +1,227 @@
+# Architecture Decision Record (ADR) Generation Prompt
+
+You have just completed implementing a software feature, change, refactor, or architectural modification.
+
+Create an **Architecture Decision Record (ADR)** documenting the important technical decisions made during this work.
+
+The ADR is intended to be stored permanently in the repository as a historical record so that a future developer can understand **what was built, why it was built that way, what alternatives were considered, and what consequences the decision has**.
+
+## Instructions
+
+Document the implementation **as it actually exists**, not as originally planned.
+
+Do not invent decisions, alternatives, requirements, constraints, metrics, or implementation details that are not supported by the code, tests, configuration, repository history, or information provided during the task.
+
+Focus on decisions that are meaningful enough that a future engineer might reasonably ask:
+
+> "Why was this implemented this way?"
+
+Do not document trivial implementation details unless they have architectural significance.
+
+If there were no meaningful architectural decisions beyond the obvious implementation, say so explicitly rather than fabricating decisions.
+
+## ADR Format
+
+Use the following structure:
+
+# ADR: [Short Descriptive Title]
+
+**Status:** Accepted
+**Date:** [YYYY-MM-DD]
+**Feature / Change:** [Feature name or short description]
+
+## Context
+
+Describe the problem, requirement, or situation that led to this change.
+
+Include relevant:
+
+* Business or product requirements
+* Technical constraints
+* Existing system limitations
+* Dependencies
+* Performance, scalability, security, or reliability considerations
+* Relevant assumptions
+
+Keep this focused on the circumstances that influenced the decision.
+
+## Decision
+
+Clearly describe the decision that was made and implemented.
+
+Explain:
+
+* What was chosen
+* How it works at a high level
+* Which parts of the system are affected
+* Any important architectural boundaries or patterns introduced
+
+This section should describe the resulting architecture, not provide a line-by-line implementation walkthrough.
+
+## Alternatives Considered
+
+List the meaningful alternatives that were considered or could reasonably have been chosen.
+
+For each alternative, explain briefly:
+
+* What it would have involved
+* Why it was rejected or not selected
+* Any significant trade-offs
+
+If alternatives were not explicitly discussed during implementation, infer only reasonable alternatives that are evident from the technical context. Clearly distinguish inference from documented fact.
+
+Do not manufacture alternatives simply to fill this section.
+
+## Rationale
+
+Explain why the selected approach was preferred.
+
+Consider:
+
+* Simplicity
+* Maintainability
+* Performance
+* Scalability
+* Reliability
+* Security
+* Developer experience
+* Operational complexity
+* Compatibility with the existing architecture
+* Cost
+
+Only include factors that materially influenced the decision.
+
+## Consequences
+
+Describe the consequences of the decision.
+
+### Positive
+
+* [Benefit]
+* [Benefit]
+
+### Negative / Trade-offs
+
+* [Trade-off]
+* [Trade-off]
+
+### Risks
+
+* [Known risk]
+* [Known limitation]
+
+Be honest about compromises. ADRs are historical records, not marketing documents.
+
+## Implementation Summary
+
+Provide a concise summary of what was actually changed.
+
+Include relevant:
+
+* Components
+* Services
+* APIs
+* Data models
+* Database changes
+* Infrastructure
+* Configuration
+* Dependencies
+* Integration points
+
+Do not reproduce large sections of code.
+
+## Testing & Verification
+
+Summarize how the implementation was verified.
+
+Include:
+
+* Tests added or modified
+* Existing tests executed
+* Integration or end-to-end testing
+* Manual verification
+* Build or CI results
+* Important edge cases
+
+If something was not tested, state that explicitly.
+
+## Operational Considerations
+
+Document anything future maintainers or operators need to know.
+
+Examples:
+
+* Configuration
+* Environment variables
+* Database migrations
+* Deployment requirements
+* Monitoring
+* Logging
+* Alerting
+* Rollback considerations
+* Feature flags
+* Backward compatibility
+* Data migration
+
+If none apply, state "None."
+
+## Future Considerations
+
+Document known follow-up work, limitations, or circumstances that might cause this decision to be revisited.
+
+Examples:
+
+* Expected scaling limitations
+* Temporary workarounds
+* Technical debt
+* Future migration paths
+* Dependencies on another system
+* Conditions under which an alternative architecture may become preferable
+
+If there are no known future considerations, state "None."
+
+## Evidence
+
+List the repository artifacts that support this ADR.
+
+Examples:
+
+* Relevant source files
+* Tests
+* Configuration
+* Database migrations
+* API definitions
+* Documentation
+* CI configuration
+
+Use repository-relative paths where possible.
+
+Do not include files merely because they were touched. Include files that help establish why or how the architectural decision was made.
+
+## Accuracy Rules
+
+Follow these rules strictly:
+
+1. **Do not invent facts.**
+2. **Do not claim an alternative was considered if there is no evidence of that.**
+3. **Do not claim tests passed unless they were actually run and passed.**
+4. **Do not claim performance, security, or scalability characteristics without evidence.**
+5. **Distinguish observed facts from reasonable inference.**
+6. **Document the final implementation, not abandoned approaches.**
+7. **Prefer concise explanations over exhaustive implementation detail.**
+8. **Capture decisions and trade-offs, not every coding action.**
+9. **If information is unavailable, explicitly say "Unknown" or "Not determined."**
+10. **The ADR should remain useful to a developer encountering this system months or years from now.**
+
+## Final Review
+
+Before producing the ADR, review the implementation and ask:
+
+* What architectural decisions were actually made?
+* Why were they made?
+* What alternatives existed?
+* What trade-offs did we accept?
+* What will a future developer need to know?
+* Could someone understand this decision without reading the original coding-agent conversation?
+
+Then output **only the completed ADR in Markdown**.
