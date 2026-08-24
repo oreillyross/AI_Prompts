@@ -1,0 +1,26 @@
+Grill Me
+PRD
+Ubiquitous language file
+
+Feedback, so code does what it should
+Static types
+Browser access
+Automated Tests
+
+tdd skill
+Testing Decisions
+How big a unit
+What to mock
+What behaviours to test
+
+Improve codebase archictecture to move from shallow modules to deep modules
+
+Design the interface, delegate the implementation
+
+write a prd
+prd to issues
+
+TODO: Look at using DBOS, Inngest, , upstash, workflow directives from Vercel, temporal.
+
+
+
