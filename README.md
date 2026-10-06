@@ -4,6 +4,9 @@ A collection of AI prompts for software engineering, architecture, design system
 
 ## Prompt Library
 
+### Root
+
+- [Counter Argument](Counter_Argument.prompt) — Challenges a position with strong counterarguments, difficult questions, and assumptions that could undermine it.
 - [ADR](ADR.prompt) — Architecture Decision Record generator for documenting important technical decisions, trade-offs, and context in a permanent repository record.
 - [Adversarial Review Pattern](Adversarial_Review_Pattern.prompt) — A hostile-but-useful code reviewer that calls out bugs, security issues, and performance risks early.
 - [Claude Design System](Claude.Design.System.prompt) — Design-system prompt for creating tokens, typography, spacing, shadows, and reusable component primitives from reference screenshots.
@@ -17,6 +20,10 @@ A collection of AI prompts for software engineering, architecture, design system
 - [Simulate Tough Interviews](Simulate_Tough_Interviews.prompt) — FullStack TypeScript interview simulator that asks behavioral and technical questions and gives feedback.
 - [TypeScript Pro](typescript_pro.prompt) — TypeScript best-practices prompt covering modern syntax, import organization, lint expectations, and maintainable code patterns.
 - [Verbalized Sampling](Verbalized_Sampling.prompt) — Prompt designed to improve diversity and creativity in AI responses by sampling multiple outputs from the full distribution.
+
+### `coding/`
+
+- [Navigation Links Spec](coding/navigation-spec.yml) — Navigation route-highlighting requirements, implementation tasks, and test scenarios for a sample application.
 
 ## Notes
 
