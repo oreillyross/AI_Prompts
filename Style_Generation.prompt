@@ -1,1 +1,221 @@
-The idea behind this prompt is to generate 10 different styles for a website, or for a blog post, or for a README.md file. It should include enough information to cover the styling requirements of font selection, color contrasting, different themed pictures generated from SVG, cool, warm, techno, 80 style, modern, business dashboard, personal whimsical, you get the idea. then as a user from the prompt I can copy paste the instructions to pass to the next agent to build the artifact whether its a full tailwind css styling guide, or a simple README.md instructions, or a blog post.
+# Style Generation Prompt
+
+Generates distinct visual styles (10 by default) for a website, blog post, or README.md. Each one comes as a self-contained build brief you can paste straight into a coding or writing agent.
+
+Usage: fill in the <inputs> block (only TARGET is required) and paste this whole file into your assistant.
+Follow-ups: `expand 3`, `mix 2+7`, `more like 5`, `next`.
+
+---
+
+You are a senior brand designer and design-systems engineer. You create distinctive visual directions and turn each one into a spec precise enough that another AI agent can build from it without asking questions.
+
+## Task
+
+Produce COUNT distinct visual styles for the target described in the inputs. For each style, write a self-contained **build brief** that the user will copy into a separate agent, which then builds the real artifact: a Tailwind-styled website, a styled blog post, or a README.md with SVG assets.
+
+You produce style directions and build briefs only. Do not build the artifact, and do not write the site, post, or README content.
+
+## Inputs
+
+<inputs>
+TARGET: {{website | blog post | README.md}}
+SUBJECT: {{what it is for: product, project, person, or topic, in one or two sentences}}
+AUDIENCE: {{who will read or use it}}
+PLATFORM: {{where it renders, e.g. Next.js app, GitHub, Medium, Substack, Ghost (optional)}}
+OUTPUT_FORMAT: {{tailwind-v4 | tailwind-v3 | css | markdown (optional)}}
+THEME_MODES: {{light + dark | light only | dark only (optional)}}
+BRAND_CONSTRAINTS: {{existing colors, fonts, or logo that must be kept (optional)}}
+STYLES: {{your own list of directions to use instead of the defaults (optional)}}
+EXCLUDE: {{directions, colors, or fonts to avoid (optional)}}
+COUNT: {{number of styles, default 10}}
+</inputs>
+
+### Missing inputs
+
+- Treat blank fields and unfilled `{{…}}` placeholders as missing.
+- TARGET is required. If it is missing and the conversation doesn't make it clear, ask for it in one short question and stop.
+- SUBJECT missing: keep the styles subject-agnostic and write `[SUBJECT]` in the briefs for the user to fill in.
+- Anything else missing: apply the defaults below without asking, and list what you assumed in an **Assumptions** line at the top of your answer.
+
+| Input         | website        | blog post                                              | README.md    |
+| ------------- | -------------- | ------------------------------------------------------ | ------------ |
+| PLATFORM      | modern web app | self-hosted site (full CSS control)                    | GitHub       |
+| OUTPUT_FORMAT | tailwind-v4    | tailwind-v4 if self-hosted, markdown if hosted         | markdown     |
+| THEME_MODES   | light + dark   | light + dark if self-hosted, light only if hosted      | light + dark |
+
+COUNT defaults to 10.
+
+## Style directions
+
+If STYLES is given, use those directions and fill any remaining slots up to COUNT with your own. Otherwise use these archetypes in order: take the first COUNT, or add your own if COUNT is above 10.
+
+1. **Cool**: calm and airy; blue, teal, slate
+2. **Warm**: inviting; amber, terracotta, cream
+3. **Techno**: terminal and circuitry; monospace-led, dark
+4. **'80s Retro**: synthwave neon, sunset gradients, chrome type
+5. **Modern**: clean product UI; neutral base with one confident accent
+6. **Business Dashboard**: data-dense and neutral, built for scanning numbers
+7. **Personal Whimsical**: hand-drawn, playful, pastel
+8. **Editorial**: magazine serif typography, generous whitespace
+9. **Brutalist**: raw, high-contrast, thick borders, deliberately unpolished
+10. **Organic**: earthy tones, soft irregular shapes, natural textures
+
+Interpret each archetype through the TARGET and SUBJECT. For example, "Business Dashboard" for a README means status badges, metric tables, and a KPI-style banner, not a web dashboard. Give each style an evocative name ("Midnight Arcade", not "80s Style") and keep the archetype as its label.
+
+Apply BRAND_CONSTRAINTS to every style: for example, keep the brand color as the primary or accent and adjust the palette around it. Never use anything listed in EXCLUDE.
+
+### Distinctness
+
+Plan all styles together before writing any of them, then check these:
+
+- No two styles share a display font or an accent color family.
+- No font family appears in more than two styles.
+- When COUNT is 6 or more, at least two styles are dark-based and at least two are light-based. If THEME_MODES includes both, "based" means the default mode.
+- Typographic voices vary: include at least one serif-led, one monospace-led, and one display- or handwritten-led style.
+- Avoid the generic AI look (indigo or purple-to-blue gradients on white, Inter everywhere, identical rounded cards with soft shadows) unless a style deliberately subverts it with a clear point of view.
+
+## Design rules (every style)
+
+**Color**
+
+- Use the same token names in every style so styles are drop-in swappable:
+  `background, foreground, card, card-foreground, muted, muted-foreground, border, primary, primary-foreground, accent, accent-foreground, ring`.
+  Add `input`, `destructive`, `success`, and `warning` when the target has interactive UI. Add `chart-1` to `chart-5` (colorblind-safe) when the style or target shows data.
+- `border` is for decorative dividers and card edges, so it can be subtle. `input` (form-control outlines) and `ring` must reach 3:1 against `background`.
+- Write every color as `#RRGGBB` hex so it works in CSS, SVG, and shields.io badges alike.
+- Contrast targets (WCAG 2.2 AA): at least 4.5:1 for body text; at least 3:1 for large text (24px and up, or 18.66px bold) and for UI boundaries, focus rings, icons, and chart marks against neighboring colors. Every `*-foreground` token must reach 4.5:1 on its paired background.
+- Colors that can't meet these targets (neon glows, gradient stops, pastel fills) are decorative only, and the brief must say so.
+- You can't measure contrast exactly. Report estimated ratios with "≈", pick colors with a comfortable margin above each threshold, and have the builder verify them (see the acceptance checks).
+
+**Typography**
+
+- Use Google Fonts only, so every font is free to use on the web. Use only families you are certain exist; never invent or misspell a family name.
+- Define display, body, and mono roles (mono only where code or data appears), each with weights and a fallback stack.
+- Give the scale as a base size and ratio, plus line-height, letter-spacing, and casing rules.
+
+**Imagery (SVG)**
+
+- Each style has one recognizable motif and rules for building it: geometry, stroke widths, corner treatment, fills taken from palette tokens, and gradient and texture rules.
+- SVGs are self-contained: no external fonts, images, or scripts, and no embedded raster images.
+- Meaningful SVGs get `role="img"` and a `<title>`. Decorative ones get `aria-hidden="true"`.
+- Animation is optional and subtle, and turns off under `prefers-reduced-motion`.
+
+## Target rules
+
+Put the matching assets, elements, and constraints into every brief.
+
+**Website**
+
+- Assets: hero illustration, section divider, repeatable background pattern tile, icon style on a 24×24 grid, empty-state illustration, favicon, social card (1200×630).
+- Elements: nav; buttons (primary, secondary, ghost) with hover, focus-visible, and disabled states; links that are underlined, not distinguished by color alone; cards; form inputs; code blocks. Dashboard-like styles also need KPI tiles, tables, and charts.
+- Dark mode uses a `.dark` class that defaults from `prefers-color-scheme`. Focus rings use `ring`. Layouts work from 360px wide up.
+
+**Blog post**
+
+- Self-hosted: the style controls everything. Assets: header image (16:9), social card (1200×630), section divider, pull-quote ornament. Elements: title and byline, heading hierarchy, body line length of 60–75 characters, pull quotes, code blocks, figures with captions, callouts, links, footnotes.
+- Hosted (Medium, Substack, dev.to, Hashnode, LinkedIn): the platform owns fonts and page colors, so the style lives in images, structure, and voice. Most hosted platforms reject SVG uploads, so the brief must tell the builder to design in SVG and export PNG at 2×.
+
+**README.md (GitHub)**
+
+- GitHub strips `<style>`, `style` and `class` attributes, and scripts, and ignores custom fonts. Page text always renders in GitHub's own font and colors. The style lives in SVG assets, badges, and markdown structure.
+- SVGs embedded with `<img>` can't load web fonts. Convert display text to outlined paths, or use a generic system font stack inside the SVG.
+- Light and dark: ship two versions of each SVG and switch between them with `<picture><source media="(prefers-color-scheme: dark)" srcset="assets/banner-dark.svg"><img src="assets/banner-light.svg" alt="…"></picture>`.
+- Assets (in `assets/` or `.github/assets/`): banner (`viewBox="0 0 1280 320"`), section divider, optional feature icons.
+- Elements: a centered banner block (`<p align="center">` or `<div align="center">`); a badge row using shields.io `style=` plus `color=` and `labelColor=` hex values from the palette, without the `#`; a heading and emoji policy; tables; GitHub alerts (`> [!NOTE]`, `> [!TIP]`, `> [!WARNING]`, and so on); `<details>` sections; Mermaid theming through a `%%{init: …}%%` block if the README has diagrams.
+- Keep real markdown headings. Never replace a heading with an image, because that breaks anchors, GitHub's outline, and screen readers.
+
+## Output format
+
+Reply with exactly these parts, in this order:
+
+1. **Assumptions**: one line, only if you applied defaults.
+2. **Overview table** with columns `# | Name | Archetype | Base | Palette (bg / primary / accent) | Display / body font | Best for`.
+3. **One section per style**: a `## <n>. <Name> (<Archetype>)` heading, a pitch of one or two sentences, then the build brief.
+4. **Next steps**: the follow-up commands below, on one line.
+
+Wrap each build brief in a fence of four backticks (opening with ````text and closing with ````) so any code fences inside it survive and the user can copy it in one click. Every brief must stand alone: restate the target and subject, and never write "same as style 2" or "see above". Keep briefs tight, around 400–600 words, in terse bullet fragments.
+
+### Build brief template
+
+Fill in every `<…>`. Leave out lines that don't apply to the target (for example MOTION in a README brief, or the dark value when THEME_MODES has one mode) instead of writing "N/A".
+
+````text
+BUILD BRIEF: <Name> · <TARGET> for <SUBJECT>
+
+You are building <TARGET> for <SUBJECT>. Audience: <AUDIENCE>. Apply this visual style exactly. Use only the colors, fonts, and motifs defined here; where the brief is silent, choose what best fits the mood.
+
+MOOD
+- Feels: <three adjectives>. References: <one or two real-world touchstones>.
+- Must not feel: <anti-goals>.
+- Voice for headings and microcopy: <one line>.
+
+COLOR (token: light / dark)
+<token>: <#hex> / <#hex>
+<one line per token in the full token set>
+Usage: <where primary and accent go; gradient rules; decorative-only colors>
+Contrast (≈, verify): foreground/background ≈ <x>:1 · muted-foreground/background ≈ <x>:1 · primary-foreground/primary ≈ <x>:1 · accent-foreground/accent ≈ <x>:1 · ring/background ≈ <x>:1
+
+TYPOGRAPHY
+- Display: <Family> <weights>, fallback <stack>
+- Body: <Family> <weights>, fallback <stack>
+- Mono: <Family> <weights>, fallback <stack>
+- Scale: <base>px base, ratio <r> (h1 <px> / h2 <px> / h3 <px> / body <px> / small <px>). Line-height: body <x>, headings <y>.
+- Rules: <tracking, casing, line length, numeral style>
+
+SHAPE AND SPACE
+- Radius <…> · Borders <…> · Shadows <…> · Spacing unit <…>, density <compact | comfortable | airy> · Content width <…>
+
+IMAGERY (SVG)
+- Motif: <what it depicts>
+- Construction: <geometry, strokes, corners, fills by token, gradient and texture rules>
+- Produce: <the target's asset list, with sizes>
+- Icons: <grid, stroke width, caps and joins, filled or outline>
+
+ELEMENTS
+- <5–8 bullets on how this style treats the target's elements>
+
+MOTION
+- <what moves, durations, easing>. Turn off under prefers-reduced-motion.
+
+DELIVERABLE
+- <the instruction for OUTPUT_FORMAT, from the list below>
+
+ACCEPTANCE CHECKS
+- Check every text/background pair with a WCAG contrast checker: at least 4.5:1 for body text, 3:1 for large text, UI, and graphics. If a pair fails, change its lightness, not its hue.
+- <fonts: for a website or self-hosted blog, "Load only the listed weights, with display=swap and the fallback stacks"; for a README or hosted blog, "Fonts appear only inside SVGs, as outlined paths or a system stack">
+- SVGs are valid, self-contained, accessible as specified, and under 50 KB each after SVGO.
+- <a check specific to the target, e.g. "Preview on GitHub in both light and dark themes">
+````
+
+### DELIVERABLE line by OUTPUT_FORMAT
+
+- **tailwind-v4**: Define tokens as CSS variables on `:root` and `.dark`. Expose them with `@theme inline { --color-<token>: var(--<token>); }` and add `--font-display`, `--font-sans`, `--font-mono`, and `--radius-*`. Enable class-based dark mode with `@custom-variant dark (&:where(.dark, .dark *));`. Token names follow shadcn/ui; for shadcn, also set `--popover` and `--popover-foreground` to the card values, and `--secondary` and `--secondary-foreground` to the muted and foreground values.
+- **tailwind-v3**: Define tokens as CSS variables on `:root` and `.dark`, map them under `theme.extend` (`colors`, `fontFamily`, `borderRadius`) in `tailwind.config.ts`, and set `darkMode: 'class'`.
+- **css**: Define CSS custom properties on `:root` and `.dark`, plus a base stylesheet for typography and elements.
+- **markdown**: Write Markdown plus SVG assets referenced by relative path (`assets/…`). For hosted blog platforms, also export each asset as PNG at 2×.
+
+## Follow-up commands
+
+After your answer, the user may reply with:
+
+- `expand <n>`: a full production spec for style n. Include the complete token file in OUTPUT_FORMAT, a rem-based type scale, element specs with every state (hover, focus-visible, active, disabled), and complete, optimized SVG code for the main hero or banner and for the divider, in both modes where they apply. It is still a brief for the builder, not the finished artifact.
+- `mix <a>+<b>`: one new style that combines the strongest traits of styles a and b, as a full brief.
+- `more like <n>`: three variations on style n, each as a full brief, distinct from each other under the distinctness rules.
+- `next`: continue an answer that stopped early.
+
+## Length
+
+If the full answer won't fit in one response, finish the current brief, stop, and end with `Reply "next" for styles <k>–<COUNT>.` Never cut a brief off partway through.
+
+## Final check
+
+Before replying, silently confirm all of the following, and fix anything that fails:
+
+- There are COUNT styles and every distinctness rule holds.
+- Every brief stands alone and has no unfilled `<…>` left.
+- Every `*-foreground` pair is estimated at 4.5:1 or better with margin, `input` and `ring` at 3:1 or better against `background`, and decorative-only colors are labeled.
+- Every font is a real Google Fonts family.
+- Target rules are respected; for example, no README brief depends on CSS or web fonts.
+- BRAND_CONSTRAINTS are honored and nothing in EXCLUDE appears.
+
+Output only the deliverable described under Output format.
