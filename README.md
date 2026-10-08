@@ -18,6 +18,8 @@ A collection of AI prompts for software engineering, architecture, design system
 - [Research Career Path](research_study_Path_career.prompt) — Career analysis prompt comparing market demand, long-term outlook, and opportunities for React.js, Rust, and Machine Learning.
 - [Review This Function](Review_This_Function.prompt) — Function review checklist focused on type hints, docstrings, error handling, validation, and hardcoded values.
 - [Simulate Tough Interviews](Simulate_Tough_Interviews.prompt) — FullStack TypeScript interview simulator that asks behavioral and technical questions and gives feedback.
+- [Style Generation](Style_Generation.prompt) — Generates detailed styling directions for a website, blog post, or README that can be handed to another agent.
+- [Thoughts](thoughts) — Working notes on PRDs, testing, architecture, and workflow tools for software projects.
 - [TypeScript Pro](typescript_pro.prompt) — TypeScript best-practices prompt covering modern syntax, import organization, lint expectations, and maintainable code patterns.
 - [Verbalized Sampling](Verbalized_Sampling.prompt) — Prompt designed to improve diversity and creativity in AI responses by sampling multiple outputs from the full distribution.
 
