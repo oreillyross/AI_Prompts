@@ -17,6 +17,7 @@ A collection of AI prompts for software engineering, architecture, design system
 - [PMARCA System](PMARCA_System.prompt) — High-intensity expert advisor designed to challenge assumptions, present counterarguments, and then support a stronger conclusion.
 - [Research Career Path](research_study_Path_career.prompt) — Career analysis prompt comparing market demand, long-term outlook, and opportunities for React.js, Rust, and Machine Learning.
 - [Review This Function](Review_This_Function.prompt) — Function review checklist focused on type hints, docstrings, error handling, validation, and hardcoded values.
+- [Spec-Driven Development](SDD.md) — Brief notes on spec-driven development and strategic context engineering.
 - [Simulate Tough Interviews](Simulate_Tough_Interviews.prompt) — FullStack TypeScript interview simulator that asks behavioral and technical questions and gives feedback.
 - [Style Generation](Style_Generation.prompt) — Generates detailed styling directions for a website, blog post, or README that can be handed to another agent.
 - [Thoughts](thoughts) — Working notes on PRDs, testing, architecture, and workflow tools for software projects.
