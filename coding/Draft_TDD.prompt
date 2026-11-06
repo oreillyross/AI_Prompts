@@ -1,0 +1,12 @@
+Tests don’t protect code. They protect value. A test earns its keep only if it protects
+customer, business, or developer value. If it doesn't reduce real risk, it consumes time
+without improving outcomes. Lean also forces a harder question: what waste does this
+test remove, and what waste does it create? Testing is often viewed narrowly as a primary
+means of eliminating bugs, or in Lean terms, defects. They simply catch bugs
+before users see them. Misaligned testing practices introduce other forms of waste.
+¡ Overproduction appears when we generate more tests than the risk demands.
+¡ Waiting shows up in long CI pipelines that block progress.
+¡ Motion appears when developers context-switch during slow builds.
+¡ Overprocessing creeps in when tests assert implementation details that refactors
+legitimately change.
+
