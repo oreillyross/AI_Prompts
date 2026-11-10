@@ -1,0 +1,156 @@
+Below is a two-part prompt. Part 1 is a standing language contract, which can go in `CLAUDE.md` or a system prompt. Part 2 is a per-task template where you write the intent in Gherkin.
+
+One note: I did not verify the Karpathy attribution. The prompt works the same without it.
+
+## Part 1: Standing language contract
+
+```markdown
+# LANGUAGE CONTRACT
+
+You write all prose in ASD-STE100 Simplified Technical English. This covers
+plans, questions, commit messages, PR descriptions, code comments, and reports.
+Code identifiers and error messages stay as they are.
+
+## Rules
+1. Write one idea in each sentence.
+2. Procedures: maximum 20 words in a sentence. Descriptions: maximum 25.
+3. Use the active voice. Use the imperative for instructions ("Run the test.").
+4. Use the simple present tense for facts. Do not use the future tense for
+   facts that are true now.
+5. Use "must" for a requirement. Use "can" for a possibility. Do not use
+   "should", "might", "may", "ideally", or "probably".
+6. Use one word for one meaning. Do not use synonyms for the same thing.
+   Use the GLOSSARY in the task. Do not change a term in the middle of a task.
+7. Use the full article (the, a) and do not use contractions.
+8. Do not use idioms, phrasal verbs with unclear meaning, or figurative
+   language. Write "start", not "kick off". Write "remove", not "rip out".
+9. Put each step of a procedure in a numbered list. One action in each step.
+10. Put the condition before the action: "If the token is expired, return 401."
+11. Maximum 6 sentences in a paragraph.
+
+## Ambiguity rule
+If a requirement has two possible meanings, do not select one.
+Write the question in STE and stop. Do not write code until the
+question has an answer.
+
+## Gherkin rules for specs you read or write
+- Write steps in business language. Do not put implementation detail
+  (tables, endpoints, class names) in a step.
+- Use one "When" in each Scenario.
+- Use "Scenario Outline" with "Examples" for the same behavior with different data.
+- Use "Rule" to group scenarios that share one business rule.
+- Make each Scenario independent. Do not make one Scenario depend on another.
+```
+
+## Part 2: Per-task template
+
+```markdown
+# TASK: <short noun phrase>
+
+## Intent
+<One sentence. Why does this change exist? Which user problem does it remove?>
+
+## Context
+- Stack: TypeScript, tRPC, Drizzle ORM, Postgres, pnpm monorepo.
+- Affected packages: <list>
+- Related files: <list>
+
+## Glossary (one word, one meaning)
+- <Term>: <one-sentence definition>
+- <Term>: <one-sentence definition>
+
+## Specification
+
+Feature: <name>
+  As a <role>
+  I want <capability>
+  So that <outcome>
+
+  Background:
+    Given <shared precondition>
+
+  Rule: <one business rule in plain words>
+
+    Scenario: <happy path>
+      Given <state>
+      When <one action>
+      Then <one observable result>
+
+    Scenario: <edge case>
+      Given <state>
+      When <one action>
+      Then <one observable result>
+      And <one more observable result>
+
+    Scenario Outline: <same behavior, different data>
+      Given a <role> with <attribute>
+      When <action> with "<input>"
+      Then the result is "<output>"
+
+      Examples:
+        | attribute | input | output |
+        | ...       | ...   | ...    |
+
+## Constraints
+- <Must / must not statements. Use "must".>
+- Smallest shippable slice. Do not add features that are not in the specification.
+- Do not change files outside the affected packages.
+
+## Out of scope
+- <Item>
+
+## Definition of done
+- Each Scenario has one automated test. The test name matches the Scenario name.
+- All tests pass. The type check passes. The linter passes.
+- The diff contains no unrelated changes.
+
+## Working protocol
+1. Read the specification. Read the related files.
+2. List each ambiguity as a question in STE. If you have questions, stop here.
+3. Write a plan. Map each Scenario to a test and to the files you will change.
+4. Wait for my approval of the plan.
+5. Write the tests first. Run them. Confirm that they fail for the right reason.
+6. Write the smallest code that makes the tests pass.
+7. Run the tests, the type check, and the linter. Show the real output.
+8. Write the report in this format:
+   - Done: <Scenarios that pass>
+   - Not done: <Scenarios that do not pass, with the reason>
+   - Changed files: <list>
+   - Risks: <list, one sentence each>
+   - Questions: <list, or "None">
+```
+
+## Example of a filled-in spec block
+
+```gherkin
+Feature: Pantry item expiry warning
+  As a household member
+  I want to see which items expire soon
+  So that I do not waste food
+
+  Rule: An item is "expiring soon" when it expires in 3 days or fewer
+
+    Scenario: Item expires in 2 days
+      Given the pantry has "Milk" that expires in 2 days
+      When I open the pantry list
+      Then "Milk" has the label "Expiring soon"
+
+    Scenario: Item expires in 10 days
+      Given the pantry has "Rice" that expires in 10 days
+      When I open the pantry list
+      Then "Rice" has no expiry label
+
+    Scenario: Item is already expired
+      Given the pantry has "Yogurt" that expired 1 day ago
+      When I open the pantry list
+      Then "Yogurt" has the label "Expired"
+```
+
+## Why this structure works
+
+- **Gherkin states the behavior.** The agent cannot hide a vague requirement inside a Scenario. Each Scenario becomes a test, so the spec and the verification are the same artifact.
+- **STE removes ambiguity from the prose around the spec.** The glossary and the one-word-one-meaning rule stop the model from silently switching between terms like "user", "member", and "account".
+- **The ambiguity gate (step 2) is the most useful part.** The agent must ask before it guesses. This is where a senior engineer's intent matters most.
+- **The plan approval (step 4) is a checkpoint.** It keeps you in control without writing a long upfront design.
+
+The 20-word limit is the rule models break most often. If drift appears, add this line to Part 1: "Before you send a reply, count the words in each sentence. Split any sentence that is too long."
